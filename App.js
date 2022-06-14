@@ -37,7 +37,6 @@ export default function App() {
           </View>
 
           <View style = {styles.chatContainer}> 
-            
           </View>
       </View>
     );
@@ -59,4 +58,10 @@ const styles = StyleSheet.create({
     color : "#fff",
     fontFamily : "Sora_400Regular"
   },
+  chatContainer : { 
+    backgroundColor : "#333",
+    flex : 1, 
+    margin: 0,
+    marginTop : 20, 
+  }
 });
