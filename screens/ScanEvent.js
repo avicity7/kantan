@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Icon } from "react-native-elements";
@@ -20,41 +21,42 @@ const Scan = () => {
   const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [hasScanned, setHasScanned] = useState(false);
+  const [enteredCode, setEnteredCode] = useState("");
 
-  const onScanned = ({ type, data }) => {
-    const checkDatabase = async () => {
-      const reference = doc(database, "events", data);
-      const snapshot = await getDoc(reference);
+  const checkDatabase = async (code) => {
+    const reference = doc(database, "events", code);
+    const snapshot = await getDoc(reference);
 
-      if (!snapshot.exists()) {
-        Alert.alert(
-          "Invalid code",
-          "The code you have scanned doesn't seem to exist. Please try again."
-        );
-      } else {
-        try {
-          await updateDoc(reference, {
-            users: arrayUnion({ uid: auth.currentUser.uid }),
+    if (!snapshot.exists()) {
+      Alert.alert(
+        "Invalid code",
+        "The code you have provided doesn't seem to exist. Please try again."
+      );
+    } else {
+      try {
+        await updateDoc(reference, {
+          users: arrayUnion({ uid: auth.currentUser.uid }),
+        })
+          .then(() => {
+            // TODO: Add to calendar
           })
-            .then(() => {
-              // TODO: Add to calendar
-            })
-            .finally(() =>
-              console.log(
-                `Added user with uid ${auth.currentUser.uid} to document ${data}`
-              )
-            );
-        } catch (e) {
-          console.error("Error updating document: ", e);
-          Alert.alert(
-            "Something went wrong",
-            `Something went wrong when trying to update the database: ${e}`
+          .finally(() =>
+            console.log(
+              `Added user with uid ${auth.currentUser.uid} to document ${code}`
+            )
           );
-        }
+      } catch (e) {
+        console.error("Error updating document: ", e);
+        Alert.alert(
+          "Something went wrong",
+          `Something went wrong when trying to update the database: ${e}`
+        );
       }
-    };
+    }
+  };
 
-    checkDatabase();
+  const onScanned = ({ data }) => {
+    checkDatabase(data);
     setHasScanned(true);
   };
 
@@ -90,8 +92,11 @@ const Scan = () => {
       <View style={styles.bottomContainer}>
         <Text style={styles.orLabel}>OR</Text>
         <View style={globalStyles.center}>
-          <Input placeholder="Enter code" />
-          <Button text="Submit" />
+          <Input placeholder="Enter code" onChangeText={setEnteredCode} />
+          <Button
+            text="Submit"
+            onPress={() => checkDatabase(enteredCode.toUpperCase())}
+          />
         </View>
       </View>
       <View style={styles.tabRectangle}>
