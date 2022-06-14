@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
@@ -23,3 +24,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+=======
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Sora_400Regular,
+  Sora_600SemiBold,
+  Sora_700Bold,
+} from "@expo-google-fonts/sora";
+import Chats from "./screens/Chats";
+
+export default function App() {
+  let [fontsLoaded] = useFonts({
+    Sora_400Regular,
+    Sora_600SemiBold,
+    Sora_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return <Chats />;
+  }
+}
+>>>>>>> d698ef3b3f7906d912922459daef82df88ecd9b6
