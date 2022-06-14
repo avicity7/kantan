@@ -7,14 +7,18 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
+import "react-native-get-random-values";
+import { customAlphabet } from "nanoid/non-secure";
+import { useEffect } from "react";
+import QRCode from "react-native-qrcode-svg";
 
 const CreateEvent = () => {
-  const [eventName, setEventName] = useState(null);
+  const [eventName, setEventName] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [code, setCode] = useState(null);
 
   const validateInput = () => {
-    console.log(eventName, eventName !== "" || eventName !== null);
-    if (eventName === "" || eventName === null) {
+    if (eventName === "") {
       Alert.alert(
         "Invalid name",
         "The name for the event is not valid. Please try again."
@@ -24,31 +28,56 @@ const CreateEvent = () => {
     }
   };
 
+  const generateCode = () => {
+    const code = customAlphabet("1234567890abcdefghijkmnopqrstuvwxyz", 7);
+    return code().toUpperCase();
+  };
+
+  useEffect(() => {
+    if (completed) {
+      const code = generateCode();
+      setCode(code);
+    }
+  }, [completed]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Create an event</Text>
       <Text style={styles.body}>
-        You will get to select individuals involved in this event and send a
-        notice after this step.
+        {code !== null
+          ? "Send this QR code or the code ID below to the individuals involved in this event."
+          : "You will get to select individuals involved in this event and send a notice after this step."}
       </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Event name"
-          placeholderTextColor="#AAA"
-          style={styles.input}
-          onChangeText={(text) => {
-            setEventName(text);
-          }}
-        />
-      </View>
 
-      <TouchableOpacity
-        onPress={() => validateInput()}
-        style={styles.buttonContainer}
-        disabled={completed}
-      >
-        <Text style={styles.buttonText}>Create</Text>
-      </TouchableOpacity>
+      {code !== null ? (
+        <>
+          <View style={styles.qrCodeContainer}>
+            <QRCode value={code} size={250} />
+          </View>
+          <Text style={styles.code}>{code}</Text>
+        </>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Event name"
+              placeholderTextColor="#AAA"
+              style={styles.input}
+              onChangeText={(text) => {
+                setEventName(text);
+              }}
+            />
+          </View>
+
+          <TouchableOpacity
+            onPress={() => validateInput()}
+            style={styles.buttonContainer}
+            disabled={completed}
+          >
+            <Text style={styles.buttonText}>Create</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -99,6 +128,14 @@ const styles = StyleSheet.create({
     fontFamily: "Sora_600SemiBold",
     color: "#fff",
     fontSize: 16,
+  },
+  qrCodeContainer: {
+    marginVertical: 40,
+  },
+  code: {
+    fontSize: 32,
+    color: "#fff",
+    fontFamily: "Sora_700Bold",
   },
 });
 
