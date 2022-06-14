@@ -5,6 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
 import Chats from "./screens/Chats";
+import Scan from "./screens/ScanEvent";
+import CreateEvent from "./screens/CreateEvent";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -35,7 +37,21 @@ export default function App() {
               name="Login"
               component={Login}
             />
-            <Stack.Screen name="Chats" options={{ headerShown: false }} component={Chats} />
+            <Stack.Screen
+              name="Chats"
+              options={{ headerShown: false }}
+              component={Chats}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="ScanEvent"
+              component={Scan}
+            />
+            <Stack.Screen
+              name="CreateEvent"
+              options={{ headerShown: false }}
+              component={CreateEvent}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </>
