@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./screens/Login";
 import Chats from "./screens/Chats";
+import AppLoading from "expo-app-loading";
 import {
   useFonts,
   Sora_400Regular,
@@ -21,21 +22,26 @@ export default function App() {
     Sora_700Bold,
   });
 
-  return (
-    <>
-      <StatusBar hidden />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={Login}
-          />
-          <Stack.Screen name="Chats" component={Chats} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
-  );
+  if (!fontsLoaded) {
+    return <AppLoading/>
+  }
+  else { 
+    return (
+      <>
+        <StatusBar hidden />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={Login}
+            />
+            <Stack.Screen name="Chats" component={Chats} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </>
+    );
+    }
 }
 
 const styles = StyleSheet.create({
