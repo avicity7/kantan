@@ -39,9 +39,15 @@ export default function App() {
               component={Login}
             />
             <Stack.Screen
-              options={{ headerShown: false }}
               name="ChatScreen"
               component={ChatScreen}
+              options={{
+                title: "Chat 1",
+                headerStyle: { backgroundColor: "#333" },
+                headerTintColor: "#FFF",
+                headerTitleStyle: { fontFamily: "Sora_400Regular" },
+                headerTitleAlign: "center",
+              }}
             />
             <Stack.Screen
               name="Chats"

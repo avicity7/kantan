@@ -4,8 +4,14 @@ import React, {
   useLayoutEffect,
   useCallback,
 } from "react";
-import { TouchableOpacity, Text } from "react-native";
-import { GiftedChat } from "react-native-gifted-chat";
+import { TouchableOpacity, Text, View } from "react-native";
+import {
+  GiftedChat,
+  renderBubble,
+  Bubble,
+  Composer,
+  InputToolbar,
+} from "react-native-gifted-chat";
 import {
   collection,
   addDoc,
@@ -18,11 +24,6 @@ import { auth } from "../firebase";
 import { database } from "../firebase";
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
-
-  // useEffect(() => {
-  //   setMessages([
-
-  // }, []);
 
   useEffect(() => {
     const collectionRef = collection(database, "chats");
@@ -56,14 +57,56 @@ export default function ChatScreen({ navigation }) {
   }, []);
 
   return (
-    <GiftedChat
-      messages={messages}
-      showAvatarForEveryMessage={true}
-      onSend={(messages) => onSend(messages)}
-      user={{
-        _id: auth?.currentUser?.email,
-        avatar: "https://avatars.githubusercontent.com/u/10234615?v=4",
-      }}
-    />
+    <View style={{ backgroundColor: "#333", flex: 1 }}>
+      <GiftedChat
+        messages={messages}
+        renderBubble={(props) => {
+          return (
+            <Bubble
+              {...props}
+              textStyle={{
+                right: {
+                  color: "white",
+                  fontFamily: "Sora_400Regular",
+                },
+                left: {
+                  color: "white",
+                  fontFamily: "Sora_400Regular",
+                },
+              }}
+              wrapperStyle={{
+                left: {
+                  backgroundColor: "#555",
+                },
+                right: {
+                  backgroundColor: "#6FB16D",
+                },
+              }}
+            />
+          );
+        }}
+        renderInputToolbar={(props) => (
+          <InputToolbar
+            {...props}
+            containerStyle={{ backgroundColor: "#333" }}
+            renderComposer={(props1) => (
+              <Composer
+                {...props1}
+                textInputStyle={{
+                  color: "white",
+                  fontFamily: "Sora_400Regular",
+                }}
+              />
+            )}
+          />
+        )}
+        showAvatarForEveryMessage={true}
+        onSend={(messages) => onSend(messages)}
+        user={{
+          _id: auth?.currentUser?.email,
+          name: auth?.currentUser?.email,
+        }}
+      />
+    </View>
   );
 }

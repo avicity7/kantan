@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("ChatScreen");
+        navigation.navigate("Chats");
       }
     });
 
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     width: "80%",
     backgroundColor: "#555",
     borderRadius: 25,
-    padding: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     marginTop: 15,
   },
 
@@ -113,6 +114,10 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     width: "60%",
+  },
+
+  button: {
+    width: "100%",
     backgroundColor: "#6FB16D",
     borderRadius: 25,
     padding: 10,
