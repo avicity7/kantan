@@ -12,10 +12,10 @@ const firebaseConfig = {
   apiKey: "***REMOVED***",
   authDomain: "***REMOVED***",
   projectId: "***REMOVED***",
-  storageBucket: "***REMOVED***.appspot.com",
+  storageBucket: "***REMOVED***",
   messagingSenderId: "***REMOVED***",
-  appId: "1:***REMOVED***:web:50b73d25382367a706a941",
-  measurementId: "***REMOVED***,
+  appId: "***REMOVED***",
+  measurementId: "***REMOVED***",
 };
 
 // Initialize Firebase
