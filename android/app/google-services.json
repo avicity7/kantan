@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "456594270932",
+    "project_id": "kantan-ea442",
+    "storage_bucket": "kantan-ea442.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456594270932:android:9d48cad82fff611306a941",
+        "android_client_info": {
+          "package_name": "com.kumo.kantan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456594270932-gn5rl1na89po4qvgfisamokagv7r92ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNCB0syy7N-oOJUCkyrwvV4d1yof6PZmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456594270932-gn5rl1na89po4qvgfisamokagv7r92ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
