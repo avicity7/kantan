@@ -11,6 +11,8 @@ import "react-native-get-random-values";
 import { customAlphabet } from "nanoid/non-secure";
 import { useEffect } from "react";
 import QRCode from "react-native-qrcode-svg";
+import { auth, database } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -39,6 +41,26 @@ const CreateEvent = () => {
       setCode(code);
     }
   }, [completed]);
+
+  useEffect(() => {
+    const addToDatabase = async () => {
+      console.log(code);
+      try {
+        await setDoc(doc(database, "events", code), {
+          id: code,
+          name: eventName,
+          owner: auth.currentUser.uid,
+          users: [],
+        });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    };
+
+    if (code !== null) {
+      addToDatabase();
+    }
+  }, [code]);
 
   return (
     <View style={styles.container}>
