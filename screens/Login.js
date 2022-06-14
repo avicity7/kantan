@@ -11,7 +11,10 @@ import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/core";
 
 const Login = () => {
+<<<<<<< HEAD
   const navigation = useNavigation();
+=======
+>>>>>>> 9abc3676ef735569f01deb7f47e0ef9e02ec6b87
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

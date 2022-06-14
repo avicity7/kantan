@@ -23,9 +23,8 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading/>
-  }
-  else { 
+    return <AppLoading />;
+  } else {
     return (
       <>
         <StatusBar hidden />
@@ -41,7 +40,7 @@ export default function App() {
         </NavigationContainer>
       </>
     );
-    }
+  }
 }
 
 const styles = StyleSheet.create({
