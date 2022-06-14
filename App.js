@@ -23,13 +23,17 @@ export default function App() {
 
   return (
     <>
-    <StatusBar hidden />
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
-        <Stack.Screen name="Chats" component={Chats} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <StatusBar hidden />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen name="Chats" component={Chats} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 }
