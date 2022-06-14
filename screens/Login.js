@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const LoginScreen = () => {
+const Login = () => {
   return (
     <View>
       <Text>LoginScreen</Text>
@@ -9,6 +9,6 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default Login;
 
 const styles = StyleSheet.create({});
