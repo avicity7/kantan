@@ -7,6 +7,7 @@ import Login from "./screens/Login";
 import Chats from "./screens/Chats";
 import Scan from "./screens/ScanEvent";
 import CreateEvent from "./screens/CreateEvent";
+import ChatScreen from "./screens/ChatScreen";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -36,6 +37,11 @@ export default function App() {
               options={{ headerShown: false }}
               name="Login"
               component={Login}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="ChatScreen"
+              component={ChatScreen}
             />
             <Stack.Screen
               name="Chats"

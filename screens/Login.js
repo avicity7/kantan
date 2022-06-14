@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("CreateEvent");
+        navigation.navigate("ChatScreen");
       }
     });
 
