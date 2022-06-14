@@ -29,7 +29,7 @@ const CreateEvent = () => {
   };
 
   const generateCode = () => {
-    const code = customAlphabet("1234567890abcdefghijkmnopqrstuvwxyz", 7);
+    const code = customAlphabet("123456789abcdefghijkmnpqrstuvwxyz", 7);
     return code().toUpperCase();
   };
 
