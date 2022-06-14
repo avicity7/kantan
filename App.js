@@ -36,7 +36,7 @@ export default function App() {
               name="Login"
               component={Login}
             />
-            <Stack.Screen name="Chats" component={Chats} />
+            <Stack.Screen name="Chats" options={{ headerShown: false }} component={Chats} />
           </Stack.Navigator>
         </NavigationContainer>
       </>
