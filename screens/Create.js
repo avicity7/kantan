@@ -1,12 +1,29 @@
 import {
+  Alert,
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { useState } from "react";
 
 const CreateEvent = () => {
+  const [eventName, setEventName] = useState(null);
+  const [completed, setCompleted] = useState(false);
+
+  const validateInput = () => {
+    console.log(eventName, eventName !== "" || eventName !== null);
+    if (eventName === "" || eventName === null) {
+      Alert.alert(
+        "Invalid name",
+        "The name for the event is not valid. Please try again."
+      );
+    } else {
+      setCompleted(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Create an event</Text>
@@ -19,14 +36,19 @@ const CreateEvent = () => {
           placeholder="Event name"
           placeholderTextColor="#AAA"
           style={styles.input}
+          onChangeText={(text) => {
+            setEventName(text);
+          }}
         />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
-          <Text style={styles.buttonText}>Create</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={() => validateInput()}
+        style={styles.buttonContainer}
+        disabled={completed}
+      >
+        <Text style={styles.buttonText}>Create</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -63,11 +85,13 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   buttonContainer: {
+    height: 55,
     width: "60%",
     backgroundColor: "#6FB16D",
     borderRadius: 25,
     padding: 10,
     marginTop: 20,
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
