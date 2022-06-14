@@ -52,7 +52,7 @@ const CreateEvent = () => {
       {code !== null ? (
         <>
           <View style={styles.qrCodeContainer}>
-            <QRCode value={code} size={250} />
+            <QRCode value={code} size={225} />
           </View>
           <Text style={styles.code}>{code}</Text>
         </>
@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
   },
   qrCodeContainer: {
     marginVertical: 40,
+    padding: 25,
+    backgroundColor: "#fff",
   },
   code: {
     fontSize: 32,
