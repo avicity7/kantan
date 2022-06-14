@@ -2,6 +2,7 @@ import Clock from "../components/Clock";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Icon } from "react-native-elements";
 
 const Chats = () => {
   const navigation = useNavigation();
@@ -38,6 +39,23 @@ const Chats = () => {
           <Text style={styles.chatTitle}>Chat 1</Text>
         </TouchableOpacity>
       </View>
+
+      <View style = {styles.tabRectangle}>
+        <View style = {styles.tabContainer}>
+          <TouchableOpacity onPress = {() => navigation.navigate("Chats")} style = {styles.chatIcon}>
+            <Icon name = 'chat' color = "#6FB16D" size = {30}/>
+            <Text style = {{color:"#6FB16D", fontFamily: "Sora_400Regular"}}>Chats</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress = {() => navigation.navigate("ScanEvent")} style = {styles.eventIcon}>
+            <Icon name = 'group' color = "#999" size = {35}/>
+            <Text style = {{color:"#999", fontFamily: "Sora_400Regular", marginTop:-2}}>Event</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style = {styles.calendarIcon}>
+            <Icon name = 'event' color = "#999" size = {30}/>
+            <Text style = {{color:"#999", fontFamily: "Sora_400Regular"}}>Calendar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -64,7 +82,7 @@ const styles = StyleSheet.create({
     margin: 0,
     marginTop: 20,
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopRightRadius: 20,   
     shadowColor: "black",
     shadowOpacity: "80%",
     shadowRadius: 30,
@@ -93,6 +111,27 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
+  tabRectangle: {
+    backgroundColor: "#393939",
+    width: "100%",
+    height: 70,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  tabContainer: {
+    width: "75%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  eventIcon: { 
+    marginRight: -12,
+    marginTop:-3,
+  },
+  calendarIcon: { 
+    marginRight: -10,
+  }
+  
 });
 
 export default Chats;

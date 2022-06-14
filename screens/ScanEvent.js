@@ -5,10 +5,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { Icon } from "react-native-elements";
+
 
 const Scan = () => {
+  const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [hasScanned, setHasScanned] = useState(false);
 
@@ -55,6 +59,22 @@ const Scan = () => {
           <Text style={styles.buttonTitle}>Submit</Text>
         </TouchableOpacity>
       </View>
+      <View style = {styles.tabRectangle}>
+        <View style = {styles.tabContainer}>
+          <TouchableOpacity onPress = {() => navigation.navigate("Chats")} style = {styles.chatIcon}>
+            <Icon name = 'chat' color = "#999" size = {30}/>
+            <Text style = {{color:"#999", fontFamily: "Sora_400Regular"}}>Chats</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress = {() => navigation.navigate("ScanEvent")} style = {styles.eventIcon}>
+            <Icon name = 'group' color = "#6FB16D" size = {35}/>
+            <Text style = {{color:"#6FB16D", fontFamily: "Sora_400Regular", marginTop: -2}}>Event</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style = {styles.calendarIcon}>
+            <Icon name = 'event' color = "#999" size = {30}/>
+            <Text style = {{color:"#999", fontFamily: "Sora_400Regular"}}>Calendar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
@@ -78,6 +98,8 @@ const styles = StyleSheet.create({
   },
   scanner: {
     flex: 1,
+    marginLeft: "20%",
+    width: "100%",
   },
   bottomContainer: {
     marginHorizontal: 40,
@@ -108,6 +130,26 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "Sora_700Bold",
   },
+  tabRectangle: {
+    backgroundColor: "#393939",
+    width: "100%",
+    height: 70,
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  tabContainer: {
+    width: "75%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  eventIcon: { 
+    marginRight: -12,
+    marginTop:-3,
+  },
+  calendarIcon: { 
+    marginRight: -10,
+  }
 });
 
 export default Scan;
