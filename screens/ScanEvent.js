@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   View,
   Text,
@@ -9,7 +10,11 @@ import { useNavigation } from "@react-navigation/core";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Icon } from "react-native-elements";
-
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { auth, database } from "../firebase";
+import globalStyles from "../styles/globalStyles";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 const Scan = () => {
   const navigation = useNavigation();
@@ -17,8 +22,40 @@ const Scan = () => {
   const [hasScanned, setHasScanned] = useState(false);
 
   const onScanned = ({ type, data }) => {
+    const checkDatabase = async () => {
+      const reference = doc(database, "events", data);
+      const snapshot = await getDoc(reference);
+
+      if (!snapshot.exists()) {
+        Alert.alert(
+          "Invalid code",
+          "The code you have scanned doesn't seem to exist. Please try again."
+        );
+      } else {
+        try {
+          await updateDoc(reference, {
+            users: arrayUnion({ uid: auth.currentUser.uid }),
+          })
+            .then(() => {
+              // TODO: Add to calendar
+            })
+            .finally(() =>
+              console.log(
+                `Added user with uid ${auth.currentUser.uid} to document ${data}`
+              )
+            );
+        } catch (e) {
+          console.error("Error updating document: ", e);
+          Alert.alert(
+            "Something went wrong",
+            `Something went wrong when trying to update the database: ${e}`
+          );
+        }
+      }
+    };
+
+    checkDatabase();
     setHasScanned(true);
-    console.log(type, data);
   };
 
   useEffect(() => {
@@ -29,49 +66,65 @@ const Scan = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Scan the QR Code</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.titleText}>Scan the QR Code</Text>
       <View style={styles.scannerContainer}>
-        <BarCodeScanner
-          onBarCodeScanned={hasScanned ? undefined : onScanned}
-          barCodeTypes={["qr"]}
-          style={styles.scanner}
-        />
+        {hasPermission ? (
+          <BarCodeScanner
+            onBarCodeScanned={hasScanned ? undefined : onScanned}
+            barCodeTypes={["qr"]}
+            style={styles.scanner}
+          />
+        ) : (
+          <>
+            <Text style={styles.inadequatePermissionsHeader}>
+              Inadequate permissions
+            </Text>
+            <Text style={styles.inadequatePermissionsText}>
+              You have disabled this app's access to your camera. You will not
+              be able to scan codes.
+            </Text>
+          </>
+        )}
       </View>
       <View style={styles.bottomContainer}>
-        <Text
-          style={{
-            color: "#fff",
-            marginVertical: 16,
-            textAlign: "center",
-            fontFamily: "Sora_400Regular",
-            fontSize: 26.0,
-          }}
-        >
-          OR
-        </Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter code"
-          placeholderTextColor="#fff"
-        />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonTitle}>Submit</Text>
-        </TouchableOpacity>
+        <Text style={styles.orLabel}>OR</Text>
+        <View style={globalStyles.center}>
+          <Input placeholder="Enter code" />
+          <Button text="Submit" />
+        </View>
       </View>
-      <View style = {styles.tabRectangle}>
-        <View style = {styles.tabContainer}>
-          <TouchableOpacity onPress = {() => navigation.navigate("Chats")} style = {styles.chatIcon}>
-            <Icon name = 'chat' color = "#999" size = {30}/>
-            <Text style = {{color:"#999", fontFamily: "Sora_400Regular"}}>Chats</Text>
+      <View style={styles.tabRectangle}>
+        <View style={styles.tabContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Chats")}
+            style={styles.chatIcon}
+          >
+            <Icon name="chat" color="#999" size={30} />
+            <Text style={{ color: "#999", fontFamily: "Sora_400Regular" }}>
+              Chats
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress = {() => navigation.navigate("ScanEvent")} style = {styles.eventIcon}>
-            <Icon name = 'group' color = "#6FB16D" size = {35}/>
-            <Text style = {{color:"#6FB16D", fontFamily: "Sora_400Regular", marginTop: -2}}>Event</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ScanEvent")}
+            style={styles.eventIcon}
+          >
+            <Icon name="group" color="#6FB16D" size={35} />
+            <Text
+              style={{
+                color: "#6FB16D",
+                fontFamily: "Sora_400Regular",
+                marginTop: -2,
+              }}
+            >
+              Event
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style = {styles.calendarIcon}>
-            <Icon name = 'event' color = "#999" size = {30}/>
-            <Text style = {{color:"#999", fontFamily: "Sora_400Regular"}}>Calendar</Text>
+          <TouchableOpacity style={styles.calendarIcon}>
+            <Icon name="event" color="#999" size={30} />
+            <Text style={{ color: "#999", fontFamily: "Sora_400Regular" }}>
+              Calendar
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -80,21 +133,13 @@ const Scan = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#333",
-  },
-  header: {
-    paddingTop: 75.0,
-    fontSize: 26.0,
-    textAlign: "center",
-    fontFamily: "Sora_700Bold",
-    color: "#fff",
-  },
   scannerContainer: {
-    flex: 1,
-    marginVertical: 40,
+    height: "25%",
     aspectRatio: 1,
+    marginVertical: 40,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   scanner: {
     flex: 1,
@@ -104,31 +149,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     marginHorizontal: 40,
     marginTop: 0,
-  },
-  textInput: {
-    color: "#fff",
-    height: 55,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#fff",
-    fontFamily: "Sora_400Regular",
-    fontSize: 20.0,
-    paddingHorizontal: 16.0,
-  },
-  button: {
-    height: 55,
-    backgroundColor: "#6FB16D",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20.0,
-    marginVertical: 32.0,
-  },
-  buttonTitle: {
-    textAlign: "center",
-    fontSize: 26.0,
-    color: "#fff",
-    fontFamily: "Sora_700Bold",
+    width: "85%",
   },
   tabRectangle: {
     backgroundColor: "#393939",
@@ -143,13 +164,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
   },
-  eventIcon: { 
+  eventIcon: {
     marginRight: -12,
-    marginTop:-3,
+    marginTop: -3,
   },
-  calendarIcon: { 
+  calendarIcon: {
     marginRight: -10,
-  }
+  },
 });
 
 export default Scan;
