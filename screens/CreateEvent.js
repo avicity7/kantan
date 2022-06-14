@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import QRCode from "react-native-qrcode-svg";
 import { auth, database } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import globalStyles from "../styles/globalStyles";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -44,7 +47,6 @@ const CreateEvent = () => {
 
   useEffect(() => {
     const addToDatabase = async () => {
-      console.log(code);
       try {
         await setDoc(doc(database, "events", code), {
           id: code,
@@ -63,8 +65,8 @@ const CreateEvent = () => {
   }, [code]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Create an event</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.titleText}>Create an event</Text>
       <Text style={styles.body}>
         {code !== null
           ? "Send this QR code or the code ID below to the individuals involved in this event."
@@ -80,24 +82,12 @@ const CreateEvent = () => {
         </>
       ) : (
         <>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Event name"
-              placeholderTextColor="#AAA"
-              style={styles.input}
-              onChangeText={(text) => {
-                setEventName(text);
-              }}
-            />
-          </View>
-
-          <TouchableOpacity
+          <Input placeholder="Event name" onChangeText={setEventName} />
+          <Button
+            text="Create event"
             onPress={() => validateInput()}
-            style={styles.buttonContainer}
             disabled={completed}
-          >
-            <Text style={styles.buttonText}>Create</Text>
-          </TouchableOpacity>
+          />
         </>
       )}
     </View>
@@ -105,51 +95,9 @@ const CreateEvent = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#333",
-    display: "flex",
-    alignItems: "center",
-  },
-  header: {
-    paddingTop: 75.0,
-    fontSize: 26.0,
-    textAlign: "center",
-    fontFamily: "Sora_700Bold",
-    color: "#fff",
-  },
   body: {
     marginHorizontal: 40.0,
-    color: "#fff",
-    textAlign: "center",
-    fontFamily: "Sora_400Regular",
-  },
-  inputContainer: {
-    width: "80%",
-    backgroundColor: "#555",
-    borderRadius: 25,
-    padding: 10,
-    marginTop: 20,
-  },
-  input: {
-    fontFamily: "Sora_400Regular",
-    color: "#fff",
-  },
-  buttonContainer: {
-    height: 55,
-    width: "60%",
-    backgroundColor: "#6FB16D",
-    borderRadius: 25,
-    padding: 10,
-    marginTop: 20,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontFamily: "Sora_600SemiBold",
-    color: "#fff",
-    fontSize: 16,
+    ...globalStyles.regular,
   },
   qrCodeContainer: {
     marginVertical: 40,
@@ -157,9 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   code: {
+    ...globalStyles.bold,
     fontSize: 32,
-    color: "#fff",
-    fontFamily: "Sora_700Bold",
   },
 });
 

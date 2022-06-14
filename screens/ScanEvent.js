@@ -10,6 +10,9 @@ import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, database } from "../firebase";
+import globalStyles from "../styles/globalStyles";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 const Scan = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -60,8 +63,8 @@ const Scan = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Scan the QR Code</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.titleText}>Scan the QR Code</Text>
       <View style={styles.scannerContainer}>
         {hasPermission ? (
           <BarCodeScanner
@@ -82,44 +85,17 @@ const Scan = () => {
         )}
       </View>
       <View style={styles.bottomContainer}>
-        <Text
-          style={{
-            color: "#fff",
-            marginVertical: 16,
-            textAlign: "center",
-            fontFamily: "Sora_400Regular",
-            fontSize: 26.0,
-          }}
-        >
-          OR
-        </Text>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter code"
-          placeholderTextColor="#fff"
-        />
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonTitle}>Submit</Text>
-        </TouchableOpacity>
+        <Text style={styles.orLabel}>OR</Text>
+        <View style={globalStyles.center}>
+          <Input placeholder="Enter code" />
+          <Button text="Submit" />
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#333",
-    display: "flex",
-    alignItems: "center",
-  },
-  header: {
-    paddingTop: 75.0,
-    fontSize: 26.0,
-    textAlign: "center",
-    fontFamily: "Sora_700Bold",
-    color: "#fff",
-  },
   scannerContainer: {
     height: "25%",
     aspectRatio: 1,
@@ -135,44 +111,20 @@ const styles = StyleSheet.create({
   inadequatePermissionsHeader: {
     width: "100%",
     fontSize: 16,
-    textAlign: "center",
-    color: "#fff",
-    fontFamily: "Sora_700Bold",
+    ...globalStyles.bold,
   },
   inadequatePermissionsText: {
-    color: "#fff",
-    textAlign: "center",
-    fontFamily: "Sora_400Regular",
+    ...globalStyles.regular,
+  },
+  orLabel: {
+    marginVertical: 16,
+    ...globalStyles.regular,
+    fontSize: 26.0,
   },
   bottomContainer: {
     marginHorizontal: 40,
     marginTop: 0,
     width: "85%",
-  },
-  textInput: {
-    color: "#fff",
-    height: 55,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#fff",
-    fontFamily: "Sora_400Regular",
-    fontSize: 20.0,
-    paddingHorizontal: 16.0,
-  },
-  button: {
-    height: 55,
-    backgroundColor: "#6FB16D",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 20.0,
-    marginVertical: 32.0,
-  },
-  buttonTitle: {
-    textAlign: "center",
-    fontSize: 26.0,
-    color: "#fff",
-    fontFamily: "Sora_700Bold",
   },
 });
 
