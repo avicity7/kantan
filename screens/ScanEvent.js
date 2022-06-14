@@ -1,13 +1,5 @@
-import {
-  Alert,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Alert, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { Alert, StyleSheet, View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Icon } from "react-native-elements";
@@ -147,9 +139,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scanner: {
-    flex: 1,
-    marginLeft: "20%",
+    height: "100%",
     width: "100%",
+  },
+  inadequatePermissionsHeader: {
+    width: "100%",
+    fontSize: 16,
+    ...globalStyles.bold,
+  },
+  inadequatePermissionsText: {
+    ...globalStyles.regular,
+  },
+  orLabel: {
+    marginVertical: 16,
+    ...globalStyles.regular,
+    fontSize: 26.0,
   },
   bottomContainer: {
     marginHorizontal: 40,
