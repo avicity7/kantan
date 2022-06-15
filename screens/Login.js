@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/core";
 import globalStyles from "../styles/globalStyles";
 import Button from "../components/Button";
 import Input from "../components/Input";
-
+let userEmail;
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const Login = () => {
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(user.email);
+        userEmail = user.email;
       })
       .catch((error) => alert(error.message));
   };
@@ -49,7 +49,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export { Login, userEmail };
 
 const styles = StyleSheet.create({
   titleText: {

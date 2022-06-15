@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./screens/Login";
+import { Login } from "./screens/Login";
 import Chats from "./screens/Chats";
 import Scan from "./screens/ScanEvent";
 import CreateEvent from "./screens/CreateEvent";

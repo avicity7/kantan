@@ -3,6 +3,7 @@ import moment from "moment";
 import { useNavigation } from "@react-navigation/core";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
+import { userEmail } from "../screens/Login";
 
 const Chats = () => {
   const navigation = useNavigation();
@@ -19,6 +20,13 @@ const Chats = () => {
     "Saturday",
     "Sunday",
   ];
+  const handleScanView = () => {
+    if (userEmail == "limhong@gmail.com") {
+      navigation.navigate("CreateEvent");
+    } else if (userEmail == "tanjohn@gmail.com") {
+      navigation.navigate("ScanEvent");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -52,7 +60,7 @@ const Chats = () => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("ScanEvent")}
+            onPress={handleScanView}
             style={styles.eventIcon}
           >
             <Icon name="group" color="#999" size={35} />
