@@ -255,16 +255,29 @@ const Calendar = () => {
       theme={{
         backgroundColor: "#333",
         calendarBackground: "#333",
+        arrowColor: "#6FB16D",
+        dotColor: "#6FB16D",
+        indicatorColor: "#6FB16D",
       }}
     >
       <ExpandableCalendar
         firstDay={1}
-        leftArrowImageSource={require("../img/previous.png")}
-        rightArrowImageSource={require("../img/next.png")}
+        leftArrowImageSource={require("../img/left.png")}
+        rightArrowImageSource={require("../img/right.png")}
         markedDates={marked}
         theme={{
           backgroundColor: "#333",
           calendarBackground: "#333",
+          todayTextColor: "#fff",
+          dayTextColor: "#fff",
+          textSectionTitleColor: '#fff',
+          monthTextColor: "#6FB16D",
+          textDayFontFamily: 'Sora_400Regular',
+          textMonthFontFamily: 'Sora_400Regular',
+          textDayHeaderFontFamily: 'Sora_400Regular',
+          selectedDayBackgroundColor: "#6FB16D",
+          dotColor:"#6FB16D",
+          arrowColor: "#6FB16D",
         }}
       />
       <TimelineList
@@ -277,6 +290,7 @@ const Calendar = () => {
         theme={{
           backgroundColor: "#333",
           calendarBackground: "#333",
+          color:"#333",
         }}
       />
       <View style={styles.tabRectangle}>
