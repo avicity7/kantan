@@ -32,11 +32,16 @@ const Scan = () => {
           .then(() => {
             // TODO: Add to calendar
           })
-          .finally(() =>
+          .finally(() => {
             console.log(
               `Added user with uid ${auth.currentUser.uid} to document ${code}`
-            )
-          );
+            );
+            Alert.alert(
+              "Addition successful",
+              "Your account has been linked to the event."
+            );
+            setEnteredCode("");
+          });
       } catch (e) {
         console.error("Error updating document: ", e);
         Alert.alert(
