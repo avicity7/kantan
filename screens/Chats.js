@@ -59,10 +59,7 @@ const Chats = () => {
               Chats
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleScanView}
-            style={styles.eventIcon}
-          >
+          <TouchableOpacity onPress={handleScanView} style={styles.eventIcon}>
             <Icon name="group" color="#999" size={35} />
             <Text
               style={{
@@ -74,7 +71,10 @@ const Chats = () => {
               Event
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.calendarIcon}>
+          <TouchableOpacity
+            style={styles.calendarIcon}
+            onPress={() => navigation.navigate("Calendar")}
+          >
             <Icon name="event" color="#999" size={30} />
             <Text style={{ color: "#999", fontFamily: "Sora_400Regular" }}>
               Calendar
