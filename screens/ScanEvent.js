@@ -131,7 +131,7 @@ const Scan = () => {
 
 const styles = StyleSheet.create({
   scannerContainer: {
-    height: "25%",
+    height: "40%",
     aspectRatio: 1,
     marginVertical: 40,
     display: "flex",
@@ -166,6 +166,8 @@ const styles = StyleSheet.create({
     height: 70,
     alignItems: "center",
     borderRadius: 10,
+    marginBottom: -35,
+    marginTop: 25,
   },
   tabContainer: {
     width: "75%",
