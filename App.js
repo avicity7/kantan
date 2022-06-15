@@ -8,6 +8,7 @@ import Chats from "./screens/Chats";
 import Scan from "./screens/ScanEvent";
 import CreateEvent from "./screens/CreateEvent";
 import ChatScreen from "./screens/ChatScreen";
+import TimelineCalendarScreen from "./screens/Calendar";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -63,6 +64,11 @@ export default function App() {
               name="CreateEvent"
               options={{ headerShown: false }}
               component={CreateEvent}
+            />
+            <Stack.Screen
+              name="Calendar"
+              options={{ headerShown: false }}
+              component={TimelineCalendarScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
