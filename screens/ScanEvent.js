@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     height: 70,
     alignItems: "center",
     borderRadius: 10,
-    marginBottom: -35,
+    marginBottom: -50,
     marginTop: 25,
   },
   tabContainer: {
